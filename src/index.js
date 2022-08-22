@@ -1,3 +1,2 @@
-import bootstrap from 'bootstrap';
-
-console.log('Hello World!');
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './style.css'

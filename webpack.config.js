@@ -7,6 +7,7 @@ const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
+  devtool: 'eval-source-map',
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),

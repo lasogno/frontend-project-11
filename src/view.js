@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import onChange from 'on-change';
+import i18next from 'i18next';
 
 export default () => {
   const state = {
@@ -8,30 +9,43 @@ export default () => {
     error: '',
   };
 
+  i18next.init({
+    lng: 'ru',
+    debug: true,
+    resources: {
+      ru: {
+        translation: {
+          success: 'RSS успешно загружен',
+          invalidUrl: 'Ссылка должна быть валидным URL',
+          existingUrl: 'RSS уже существует',
+        },
+      },
+    },
+  });
+
   const inputForm = document.querySelector('.rss-form');
   const inputField = document.querySelector('#url-input');
 
   const watchedState = onChange(state, (path, value) => {
     console.log(path);
     console.log(value);
-    console.log(state);
     const pEl = document.querySelector('.feedback');
     if (state.valid) {
-      pEl.textContent = 'RSS успешно загружен';
+      pEl.textContent = i18next.t('success');
       pEl.classList.replace('text-danger', 'text-success');
       inputField.classList.remove('is-invalid');
       inputField.focus();
       inputField.value = '';
     } else {
-      pEl.textContent = state.error;
+      pEl.textContent = i18next.t(value);
       pEl.classList.replace('text-success', 'text-danger');
       inputField.classList.add('is-invalid');
     }
   });
 
   const schema = yup.string().required()
-    .url('Ссылка должна быть валидным URL')
-    .notOneOf([watchedState.url], 'RSS уже существует');
+    .url('invalidUrl')
+    .notOneOf([watchedState.url], 'existingUrl');
 
   inputForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -39,6 +53,7 @@ export default () => {
     const url = data.get('url');
     schema.validate(url).then(() => {
       watchedState.valid = true;
+      watchedState.error = '';
       watchedState.url.push(url);
     })
       .catch((e) => {

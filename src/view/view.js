@@ -7,11 +7,10 @@ import renderModal from './renderModal';
 import renderVisitedLinks from './renderVisitedLinks';
 
 const render = (state, elements, i18n) => {
-  const watcher = onChange(state, (path, value) => {
-    console.log(value);
+  const watcher = onChange(state, (path, value, prevValue) => {
     switch (path) {
       case 'error':
-        handleErrors(elements, value, i18n);
+        handleErrors(elements, value, prevValue, i18n);
         break;
       case 'feeds':
         renderFeeds(elements, state.feeds);

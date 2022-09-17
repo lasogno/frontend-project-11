@@ -1,9 +1,14 @@
-const handleErrors = (elements, errorState, i18n) => {
-  if (errorState.length > 0) {
-    elements.feedBack.textContent = i18n.t(errorState);
-    elements.feedBack.classList.replace('text-success', 'text-danger');
-    elements.inputField.classList.add('is-invalid');
-  }
+const handleErrors = (elements, currentError, prevError, i18n) => {
+  const { feedBack, inputField } = elements;
+  inputField.classList.add('is-invalid');
+
+  feedBack.classList.remove('text-info', 'text-success');
+  feedBack.classList.add('text-danger');
+  console.log(currentError);
+  console.log(prevError);
+  feedBack.textContent = currentError !== null
+    ? i18n.t(currentError)
+    : i18n.t(prevError);
 };
 
 export default handleErrors;

@@ -12,8 +12,6 @@ export default (name, lists) => {
   h2El.classList.add('card-title', 'h4');
   h2El.textContent = name;
 
-  console.log(lists);
-
   ulEl.replaceChildren(...lists);
   cardBody.replaceChildren(h2El);
   card.replaceChildren(cardBody, ulEl);

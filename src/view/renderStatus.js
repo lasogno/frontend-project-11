@@ -8,7 +8,7 @@ const renderStatus = (elements, validationState, i18n) => {
     case 'success':
       elements.feedBack.textContent = i18n.t('success');
       elements.feedBack.classList.replace('text-danger', 'text-success');
-      elements.inputField.classList.remove('is-invalid');
+      elements.inputField.classList.remove('is-invalid', 'text-info');
       elements.inputField.focus();
       elements.inputField.value = '';
       elements.inputButton.disabled = false;
